@@ -6,27 +6,19 @@ This repository serves as the deployment target for pre-compiled cryptographic l
 
 ## Distributed Artifacts
 
-### 1. `libmesh_sparrow.a`
+### 1. `lib/libmesh_sparrow.a`
 * **Target Architecture:** `aarch64-linux-android`
 * **Cryptographic Primitive:** ML-DSA-65 (Module-Lattice-Based Digital Signature Standard, FIPS 204 Compliant).
 * **Purpose:** Linkage into bare-metal systems, low-overhead environments, and embedded security runtimes requiring post-quantum transport security.
 
 ## Integration Paradigm
-To utilize this pre-compiled asset within your external build system, map your linker flags to look for the static library entry point:
+To utilize this pre-compiled asset within your external build system, map your linker flags to include the library search path, the static asset, and the required system math library (`-lm`):
 
 ```bash
--L native=/path/to/sdk/ -l mesh_sparrow
-```
-
-## Building the Examples
-
-To compile the provided native C examples against the pre-compiled `aarch64-linux-android` static library target, run your cross-compiler toolchain flag array pointing to the header include path and the static library asset:
-
-```bash
-# Example compilation invocation using localized Android NDK clang targets
 clang -O2 \
   -I./include \
   examples/node_connect.c \
   -L./lib \
   -lmesh_sparrow \
+  -lm \
   -o node_connect
