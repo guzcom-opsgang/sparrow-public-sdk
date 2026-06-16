@@ -17,3 +17,16 @@ To utilize this pre-compiled asset within your external build system, map your l
 ```bash
 -L native=/path/to/sdk/ -l mesh_sparrow
 ```
+
+## Building the Examples
+
+To compile the provided native C examples against the pre-compiled `aarch64-linux-android` static library target, run your cross-compiler toolchain flag array pointing to the header include path and the static library asset:
+
+```bash
+# Example compilation invocation using localized Android NDK clang targets
+clang -O2 \
+  -I./include \
+  examples/node_connect.c \
+  -L./lib \
+  -lmesh_sparrow \
+  -o node_connect
